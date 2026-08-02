@@ -36,10 +36,7 @@ COPY --from=frontend-builder /app/frontend/dist /usr/share/nginx/html
 # Copy nginx config
 COPY nginx.conf /etc/nginx/http.d/default.conf
 
-# Copy a start script
-COPY start.sh /app/start.sh
-RUN chmod +x /app/start.sh
-
 EXPOSE 80 8080
 
-CMD ["/app/start.sh"]
+# Start both services directly (no start.sh needed!)
+CMD sh -c "nginx -g 'daemon off;' & ./server"
